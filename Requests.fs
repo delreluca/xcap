@@ -10,7 +10,7 @@ let client = new HttpClient()
 
 let knownUrls =
     [ (("ACWI", "All Cap"), "https://www.msci.com/resources/factsheets/index_fact_sheet/msci-acwi-all-cap.pdf")
-      (("ACWI", "IMI"), "https://www.msci.com/resources/factsheets/index_fact_sheet/msci-acwi-imi.pdf")
+      (("ACWI", "IMI"), "https://www.msci.com/documents/10199/b93d88ef-632f-4bdb-9069-d7c5aecd9d6d")
       (("ACWI", "Standard"), "https://www.msci.com/resources/factsheets/index_fact_sheet/msci-acwi.pdf")
       (("ACWI", "Small Cap"), "https://www.msci.com/documents/10199/2cdf9672-e1b2-4197-a951-9605fce4772f")
       (("EM", "Standard"), "https://www.msci.com/documents/10199/c0db0a48-01f2-4ba9-ad01-226fd5678111")
