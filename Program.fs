@@ -47,6 +47,8 @@ let table ls =
 
     tbl.ToString()
 
+open System
+open System.Globalization
 [<EntryPoint>]
 let main args =
     let data = guesses |> Async.RunSynchronously
@@ -57,7 +59,7 @@ let main args =
         | _ -> ("ACWI", "IMI")
 
     match getConsistentAsOf data with
-    | Some asOf ->
+    | Ok asOf ->
         printfn "Data is as of %s" (asOf.ToString("yyyy-MM-dd"))
         printfn "100%% = %s %s" totalRow totalCol
 
@@ -68,6 +70,12 @@ let main args =
 
         printfn "%s" (table weights)
         0
-    | None ->
-        printfn "Either you were so lucky to get different as-of dates or no date could be parsed."
+    | Error ls ->
+        printfn "Either the fact sheets have inconsistent as-of dates (can happen between months) or no date could be parsed."
+        let printErrorLn ((region, cap), (marketValue: decimal option), (asOf:DateTime option)) =
+            let valFormatted = marketValue |> Option.map (fun d -> d.ToString(NumberFormatInfo.InvariantInfo)) |> Option.defaultValue "?"
+            let datFormatted = asOf |> Option.map (fun d -> d.ToString("yyyy-MM-dd")) |> Option.defaultValue "?"
+            printfn $"\tFact sheet for {region,-5} {cap,-10} has market value {valFormatted,15} USD and is as of {datFormatted,11}"
+
+        ls |> Array.iter printErrorLn
         -1
